@@ -7,7 +7,7 @@ fi
 
 if [ -z "$1" ]
 then 
-  cat ${0/.sh/.help}
+  cat $0.help
   exit 1
 fi
 

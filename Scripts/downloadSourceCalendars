@@ -2,7 +2,7 @@
 
 if ! [ -f .sourceCalendars ] || [ `cat .sourceCalendars | wc -l` -eq 0 ]
 then
-  cat ${0/.sh/.help}
+  cat $0.help
   exit 1
 fi
 
