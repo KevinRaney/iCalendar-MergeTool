@@ -24,9 +24,14 @@ This was originally developed to support individualized calendar feeds for each 
 
 5. Update the list of source calendars you want to merge into your new merged calendar.
 
-        vi .mergeCalendars
-        New Merged Calendar Name|9fa96b3f6dfcc676fae0bbea16213af3|"New Source Calendar Name.ics"
-        :wq
+    ```
+    vi .mergeCalendars
+    ```
+
+    Example `.mergeCalendars`:
+    ```
+    New Merged Calendar Name|9fa96b3f6dfcc676fae0bbea16213af3|"New Source Calendar Name.ics"
+    ```
 
 6. Run the following script to download all the source calendars.
 
@@ -35,6 +40,21 @@ This was originally developed to support individualized calendar feeds for each 
 7. Run the following script to generate/update all your merged calendars.
 
         Scripts/mergeCalendars
+
+8. After you have setup your `.sourceCalendars` and `.mergeCalendars` files you can run `downloadSourceCalendars` and `mergeCalendars` as often as you like. Typically you will setup a cron job to run it automatically.
+
+    ```
+    vi /etc/cron.d/iCalendarMergeTool
+    ```
+
+    Example cron:
+
+    ```
+    SHELL=/bin/sh
+    PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/var/iCalendarMergeTool/Scripts
+    MAILTO=""
+    */5 * * * *   root   cd /var/iCalendarMergeTool && downloadSourceCalendars && mergeCalendars
+    ```
 
 ## Source Calendar List
 
@@ -70,13 +90,17 @@ The source calendars that are stored in the `SourceCalendars` directory and are 
 > TODO: this section still needs some work.
 
 ## Scripts
-- add download a standard set of ICS files, extract the events from the file
+
+- `addSourceCalendar` Adds a new source calendar to the .sourceCalendars file.
+- `addMergeCalendar` Adds a new merge calendar to the .mergeCalendars file.
+- `downloadSourceCalendars` Downloads all source calendars listed in .sourceCalendars, extracts all events, prepend the description field with the source calendar name and save the data in the SourceCalendars directory.
+- `mergeCalendars` Creates all merged calendars listed in .mergeCalendars by combining the source calendars listed.
 
 ## Templates
 
 The templates directory contains the following files and can be modifed to suit your specific needs:
-- `Header.icstemplate` - All ICS lines to be included before the merged events.
-- `Footer.icstemplate` - All ICS lines to be included after the merged events.
+- `header.icstemplate` - All ICS lines to be included before the merged events.
+- `footer.icstemplate` - All ICS lines to be included after the merged events.
 
 ## Contributing
 
