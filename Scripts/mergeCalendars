@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if ! [ -f .mergeCalendars ] || [ `cat .mergeCalendars | wc -l` -eq 0 ]
+then
+  cat $0.help
+  exit 1
+fi
+
+cd SourceCalendars
+
+while read mergeCalendar; do
+  mergeCalendarName=$(echo $mergeCalendar | cut -f1 -d\|)
+  mergeCalendarKey=$(echo $mergeCalendar | cut -f2 -d\|)
+  calendarsToMerge=$(echo $mergeCalendar | cut -f3 -d\|)
+
+  if [ -z "$mergeCalendarName" ]
+  then
+    echo "Skipping line: \"$mergeCalendar\", it doesn't have a merge calendar name."
+  elif [ -z "$mergeCalendarKey" ]
+  then
+    echo "Skipping \"$mergeCalendarName\": it doesn't have a merge calendar key."
+  elif [ -z "$calendarsToMerge" ]
+  then
+    echo "Skipping \"$mergeCalendarName\": it doesn't have any calendars to merge"
+  else
+    echo "Merging calenders for \"$mergeCalendarName\" to ./MergedCalendars/$mergeCalendarKey.ics"
+    cat ../Templates/Header.icstemplate $calendarsToMerge ../Templates/Footer.icstemplate | sed -e "s/{{MergeCalendarName}}/$mergeCalendarName/g" > ../MergedCalendars/$mergeCalendarKey.ics
+  fi
+done <../.mergeCalendars
+cd ..
