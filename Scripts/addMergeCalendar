@@ -1,5 +1,23 @@
 #!/bin/bash
 
+usage() {
+    echo ""
+    echo "Usage: `basename $0` param1"
+    echo ""
+    echo "  Description:"
+    echo "    Adds a new merge calendar to the .mergeCalendars file."
+    echo ""
+    echo "  Parameters:"
+    echo "    - param1 : Merge Calendar Name"
+    exit 1
+}
+
+if [[ ( $@ == "--help") ||  $@ == "-h" ]] 
+then 
+  usage
+  exit 0
+fi 
+
 if ! [ -f .mergeCalendars ] || [ `cat .mergeCalendars | wc -l` -eq 0 ]
 then
   touch .mergeCalendars
@@ -7,7 +25,7 @@ fi
 
 if [ -z "$1" ]
 then 
-  cat $0.help
+  echo "ERROR: Merge Calendar Name is required."
   exit 1
 fi
 
@@ -15,4 +33,5 @@ newCalendarKey=`openssl rand -base64 20 | md5`
 
 echo "$1|$newCalendarKey|" >> .mergeCalendars
 
-echo "Your new merged calendar has been added to the bottom of the .mergeCalendars file, please open the file and update the list of source calendars to merge"
+echo "SUCCESS: Your new merged calendar ""$1"" with a key of ""$newCalendarKey"" has been added to the bottom of the .mergeCalendars file."
+echo "         Please open the file and update the list of source calendars to start merging to this calendar."

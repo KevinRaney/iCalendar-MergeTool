@@ -1,14 +1,37 @@
 #!/bin/bash
 
+usage() {
+    echo ""
+    echo "Usage: `basename $0` param1 param2"
+    echo ""
+    echo "  Description:"
+    echo "    Downloads all source calendars listed in .sourceCalendars, extracts all events,"
+    echo "    prepend the description field with the source calendar name and save the data in"
+    echo "    the SourceCalendars directory."
+    echo ""
+    echo "  Dependancy:"
+    echo "    The file .sourceCalendars is required and can be populated by calling the script"
+    echo "    Script/addSourceCalendar"
+    exit 1
+}
+
+if [[ ( $@ == "--help") ||  $@ == "-h" ]] 
+then 
+  usage
+  exit 0
+fi 
+
 if ! [ -f .sourceCalendars ] || [ `cat .sourceCalendars | wc -l` -eq 0 ]
 then
-  cat $0.help
+  usage
   exit 1
 fi
 
 while read sourceCalendar; do
   calendarName=$(echo $sourceCalendar | cut -f1 -d\|)
+  calendarFilename=$(echo $sourceCalendar | cut -f1 -d\|)
+  calendarFilename=${calendarFilename//\ /}.ics
   calendarURL=$(echo $sourceCalendar | cut -f2 -d\|)
-  echo "Downloading source calendar \"$calendarName\" and extracting events to ./SourceCalendars/\"$calendarName.ics\""
-  wget -q -O - "$calendarURL" | sed -n '/BEGIN:VEVENT/,/END:VEVENT/p' | sed -e 's/SUMMARY:/SUMMARY:'$calendarName': /g' > ./SourceCalendars/"$calendarName.ics"
+  echo "Downloading source calendar \"$calendarName\" and extracting events to ./SourceCalendars/\"$calendarFilename\""
+  wget -q -O - "$calendarURL" | sed -n '/BEGIN:VEVENT/,/END:VEVENT/p' | sed -e 's/DESCRIPTION:/DESCRIPTION:(From calendar "'"$calendarName"'")\ /g' > ./SourceCalendars/"$calendarFilename"
 done <.sourceCalendars

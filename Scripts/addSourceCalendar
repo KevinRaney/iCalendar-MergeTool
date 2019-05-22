@@ -1,5 +1,24 @@
 #!/bin/bash
 
+usage() {
+    echo ""
+    echo "Usage: `basename $0` param1 param2"
+    echo ""
+    echo "  Description:"
+    echo "    Adds a new source calendar to the .sourceCalendars file."
+    echo ""
+    echo "  Parameters:"
+    echo "    - param1 : Calendar Name"
+    echo "    - param2 : Calendar URL (must be valid)"
+    exit 1
+}
+
+if [[ ( $@ == "--help") ||  $@ == "-h" ]] 
+then 
+  usage
+  exit 0
+fi 
+
 if ! [ -f .sourceCalendars ] || [ `cat .sourceCalendars | wc -l` -eq 0 ]
 then
   touch .sourceCalendars
@@ -7,16 +26,27 @@ fi
 
 if [ -z "$1" ]
 then
-  echo "Please send the name of the new source calendar when calling this script in the first position."
-  cat $0.help
+  echo "ERROR: Calendar Name is required."
+  usage
   exit 1
 fi
 
 if [ -z "$2" ]
 then
-  echo "Please send the url of the new source calendar when calling this script in the second position."
-  cat $0.help
+  echo "ERROR: Calendar URL is required."
+  usage
   exit 1
 fi
 
-echo "$1|$2" >> .sourceCalendars
+calendarIsValid=$(wget --server-response -O /dev/null "$2" 2>&1 | grep -c 'HTTP/1.1 200 OK')
+
+if [ "$calendarIsValid" == 1 ]
+then 
+  echo "$1|$2" >> .sourceCalendars
+else
+  echo "ERROR: Calendar URL is invalid."
+  usage
+  exit 2
+fi
+
+echo "SUCCESS: Your new source calendar ""$1"" with a url of ""$2"" has been added to the bottom of the .sourceCalendars file."
