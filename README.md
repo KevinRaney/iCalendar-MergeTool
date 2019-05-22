@@ -104,4 +104,4 @@ The templates directory contains the following files and can be modifed to suit 
 
 ## Contributing
 
-Feel free to fork this repo and submit PRs By working on issues or adding features you think would be nice to add.
+Feel free to fork this repo and submit PRs by working on issues or adding features you think would be nice to have.
