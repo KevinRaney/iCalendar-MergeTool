@@ -74,7 +74,6 @@ The calendar name can be anything you want, but please keep in mind the followin
 
 - The name should be descriptive and short (oxymoron?), since it will be used to prefix all event summaries.
 - The name should not contain any characters that are invalid for filenames, since it will be used to name the extracted and modified source calendar.
-- For now, the calendar name should not contain any spaces. *In a future version, this limitation will be removed.*
 
 Actions performed for each source calendar:
 
