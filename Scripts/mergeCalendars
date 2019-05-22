@@ -1,9 +1,30 @@
 #!/bin/bash
 
+usage() {
+    echo ""
+    echo "Usage: `basename $0`"
+    echo ""
+    echo "  Description:"
+    echo "    Creates all merged calendars listed in .mergeCalendars by combining the source "
+    echo "    calendars listed."
+    echo ""
+    echo "  Dependancies:"
+    echo "    - The file .mergeCalendars is required and can be populated by calling the script"
+    echo "      Script/addMergeCalendar"
+    echo "    - All source calendars must be downloaded present in the SourceCalendars directory"
+    echo "      by calling the script Scripts/downloadSourceCalendars"
+    exit 1
+}
+
+if [[ ( $@ == "--help") ||  $@ == "-h" ]] 
+then 
+  usage
+  exit 0
+fi 
+
 if ! [ -f .mergeCalendars ] || [ `cat .mergeCalendars | wc -l` -eq 0 ]
 then
-  cat $0.help
-  exit 1
+  touch .mergeCalendars
 fi
 
 cd SourceCalendars
@@ -24,7 +45,7 @@ while read mergeCalendar; do
     echo "Skipping \"$mergeCalendarName\": it doesn't have any calendars to merge"
   else
     echo "Merging calenders for \"$mergeCalendarName\" to ./MergedCalendars/$mergeCalendarKey.ics"
-    cat ../Templates/Header.icstemplate $calendarsToMerge ../Templates/Footer.icstemplate | sed -e "s/{{MergeCalendarName}}/$mergeCalendarName/g" > ../MergedCalendars/$mergeCalendarKey.ics
+    cat ../Templates/header.icstemplate $calendarsToMerge ../Templates/footer.icstemplate | sed -e "s/{{MergeCalendarName}}/$mergeCalendarName/g" > ../MergedCalendars/$mergeCalendarKey.ics
   fi
 done <../.mergeCalendars
 cd ..

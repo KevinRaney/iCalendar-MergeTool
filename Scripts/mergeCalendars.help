@@ -1,9 +1,0 @@
-===========================================================================================
- You seem to be missing the .mergeCalendars configuration file, to add a new merged 
-                  calendar please call the script addMergeCalendar.
-===========================================================================================
-                  Scripts\addMergeCalendar "New Merged Calendar Name" 
-===========================================================================================
-       Raw ICS files with a space in the filename should be wrapped in double quotes and 
-                          and separated with a single space. 
-===========================================================================================

@@ -1,6 +1,0 @@
-=====================================================================
-       You need to generate a list of one of more calendar names
-  and urls to process and put them in a file called .RawICSCalendars
-=====================================================================
-         echo "CalendarName|CalendarURL" > .sourceCalendars
-=====================================================================
