@@ -1,12 +1,12 @@
 # iCalendar Merge Tool
 
-This project will allow you to merge multiple [iCalendar files](https://en.wikipedia.org/wiki/ICalendar) (`.ics` files) into one or more merged `.ics` files. It uses a collection of bash scripts to accomplish the calendar merges. This tool is useful for maintaining separate source calendars, for better organization, then merging one or more of the source calendars into any number of customizable sets of merged calendars. 
+This project will allow you to merge multiple [iCalendar files](https://en.wikipedia.org/wiki/ICalendar) (`.ics` files) into one or more merged `.ics` files. It uses a collection of bash scripts to accomplish the calendar merges. This tool is useful for maintaining separate source calendars, for better organization, and for merging one or more source calendars into any number of customizable sets of merged calendars. 
 
-This was originally developed to support individualized calendar feeds for each member of a team, where members can be on multiple teams and therefore need to attend events from multiple calendars. This tool simplifies the maintenance of calendars by allowing a team manager to keep a calendar for each team/set of related events. The team manager can also specify any number of custom merged calendars for each team member by specifying a name, key (can be anything but is randomly generated for privacy and uniqueness) and which source calendars the merged calendar should be built from. This method also greatly simplifies the calendar subscription/import process for the team member who can now subscribe/import one calendar instead of several.
+This was originally developed to support individualized calendar feeds for each member of a team, where members can be on multiple teams and therefore need to attend events from multiple calendars. This tool simplifies the maintenance of calendars by allowing a team manager to keep a calendar for each team/set of related events. The team manager can also specify any number of custom merged calendars for each team member by specifying a name, key (can be anything but is randomly generated for privacy and uniqueness), and source calendar that the merged calendar should be built from. This method also greatly simplifies the calendar subscription/import process for the team member who can now subscribe/import one calendar instead of several.
 
 ## Getting Started
 
-1. Clone this repo
+1. Clone this repo.
 
         git clone https://github.com/KevinRaney/iCalendarMergeTool.git
 
@@ -41,7 +41,7 @@ This was originally developed to support individualized calendar feeds for each 
 
         Scripts/mergeCalendars
 
-8. After you have setup your `.sourceCalendars` and `.mergeCalendars` files you can run `downloadSourceCalendars` and `mergeCalendars` as often as you like. Typically you will setup a cron job to run it automatically.
+8. After you have set up your `.sourceCalendars` and `.mergeCalendars` files you can run `downloadSourceCalendars` and `mergeCalendars` as often as you like. Typically, you will set up a cron job to run it automatically.
 
     ```
     vi /etc/cron.d/iCalendarMergeTool
@@ -58,9 +58,9 @@ This was originally developed to support individualized calendar feeds for each 
 
 ## Source Calendar List
 
-You will maintain a list of calendar names and urls in the file `.sourceCalendars` that you want to download and keep updated.
+You will maintain a list of calendar names and URLs in the file `.sourceCalendars` that you want to download and keep updated.
 
-This file is pipe delimited and has two columns, calendar name and calendar url. This file doesn't support a header row.
+This file is pipe delimited and has two columns: calendar name and calendar URL. This file doesn't support a header row.
 
 Below is an example file:
 
