@@ -103,4 +103,4 @@ The templates directory contains the following files and can be modifed to suit 
 
 ## Contributing
 
-Feel free to fork this repo and submit PRs by working on issues or adding features you think would be nice to have.
+Feel free to fork this repo and submit PRs by working on issues or adding features you think would be nice to have. The `master` branch should represent the latest release. The `develop` branch is used for incoming feature branch testing before it's merged into `master` and a new release is cut. When you're ready to submit your PR please merge them into the `develop` branch so your changes can be tested along with the next release. 
